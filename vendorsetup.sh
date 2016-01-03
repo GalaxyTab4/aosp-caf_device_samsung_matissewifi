@@ -1,3 +1,3 @@
-add_lunch_combo aosp_falcon-userdebug
-add_lunch_combo aosp_falcon-user
-add_lunch_combo aosp_falcon-eng
+add_lunch_combo aosp_matissewifi-userdebug
+add_lunch_combo aosp_matissewifi-user
+add_lunch_combo aosp_matissewifi-eng
