@@ -9,15 +9,8 @@ etc/Hdmi_cal.acdb
 etc/Headset_cal.acdb
 etc/Speaker_cal.acdb
 
-# Sensors
-bin/akmd8963
-
-# Touch fw
-etc/firmware/aps-Falc-01300000-0130-matissewifi.tdat
-etc/firmware/synaptics-s2316-13091704-175833-matissewifi.tdat
-
 # Camera
-lib/hw/camera.msm8226.so
+lib/hw/camera.msm8226.so:lib/hw/camera.vendor.msm8226.so
 lib/libmm-qcamera.so
 lib/libmmcamera_interface.so
 vendor/lib/libmmcamera2_c2d_module.so
