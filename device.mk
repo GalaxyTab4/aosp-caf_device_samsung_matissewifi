@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014 The CyanogenMod Project
+# Copyright (C) 2015 The AOSParadox Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,23 +14,70 @@
 # limitations under the License.
 #
 
-# call the proprietary setup
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+
 $(call inherit-product, vendor/samsung/matissewifi/matissewifi-vendor.mk)
 
-# Overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
-
-# Audio
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml
-
 # Ramdisk
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/samsung/matissewifi/ramdisk,root)
+
+# Prebuilt
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/samsung/matissewifi/prebuilt/system,system)
+
+# CAF Branch
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.par.branch=LA.BF.1.1.3-00310-8x26.0
+
+# Hadware QCOM
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.hardware=qcom
+
+# Overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/matissewifi/overlay
+PRODUCT_PACKAGE_OVERLAYS += device/samsung/matissewifi/overlay
+
+
+# CodeAurora MSM8226 Tree
+include device/qcom/msm8226/msm8226.mk
+
+# ANT+
 PRODUCT_PACKAGES += \
-    init.target.rc
+    AntHalService \
+    com.dsi.ant.antradio_library \
+    libantradio
+
+# Dalvik
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.boot-dex2oat-threads=2 \
+    dalvik.vm.dex2oat-threads=4
+
+# GPS
+PRODUCT_PACKAGES += \
+    gps.msm8226
+
+# Hardware Keys disable
+PRODUCT_PROPERTY_OVERRIDES += \
+    qemu.hw.mainkeys=1
+
+# Keystore
+PRODUCT_PACKAGES += \
+    keystore.msm8226 \
+    keystore.qcom
+
+# Lights
+PRODUCT_PACKAGES += \
+    lights.msm8226
+
+# Power
+PRODUCT_PACKAGES += \
+    power.msm8226 \
+    power.qcom
 
 # Wifi
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/wifi/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
-
-# Inherit from msm8226-common
-$(call inherit-product, device/samsung/msm8226-common/msm8226.mk)
+PRODUCT_PACKAGES += \
+    libcurl \
+    libqsap_sdk \
+    libQWiFiSoftApCfg \
+    wcnss_service

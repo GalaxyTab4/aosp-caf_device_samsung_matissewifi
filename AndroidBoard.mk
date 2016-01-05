@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The Android Open Source Project
+# Copyright (C) 2015 The AOSParadox Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_matissewifi.mk
+LOCAL_PATH := $(call my-dir)
+
+KERNEL_DIR := kernel
+
+-include $(TOP)/$(KERNEL_DIR)/AndroidKernel.mk
+
+# device.mk doesn't know about us, and we can't PRODUCT_COPY_FILES here.
+# So cp will do.
+.PHONY: $(PRODUCT_OUT)/kernel
+$(PRODUCT_OUT)/kernel: $(TARGET_PREBUILT_KERNEL)
+	cp $(TARGET_PREBUILT_KERNEL) $(PRODUCT_OUT)/kernel
+	cp device/samsung/matissewifi/prebuilt/dt.img $(PRODUCT_OUT)/dt.img
+
+include device/qcom/msm8226/AndroidBoard.mk
+

@@ -1,0 +1,32 @@
+From c51903453dc2f2c0a71766d6cacb3c89e9bcacc2 Mon Sep 17 00:00:00 2001
+From: sub77 <sub77@ymail.com>
+Date: Tue, 5 Jan 2016 17:19:04 +0100
+Subject: [PATCH] disabled DLKM
+
+---
+ dlkm/AndroidKernelModule.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dlkm/AndroidKernelModule.mk b/dlkm/AndroidKernelModule.mk
+index 8ae70c3..2b61e7f 100644
+--- a/dlkm/AndroidKernelModule.mk
++++ b/dlkm/AndroidKernelModule.mk
+@@ -1,5 +1,5 @@
+ # Assign external kernel modules to the DLKM class
+-LOCAL_MODULE_CLASS := DLKM
++# LOCAL_MODULE_CLASS := DLKM
+ 
+ # Set the default install path to system/lib/modules
+ LOCAL_MODULE_PATH := $(strip $(LOCAL_MODULE_PATH))
+@@ -47,7 +47,7 @@ KBUILD_OUT_DIR := $(TARGET_OUT_INTERMEDIATES)/$(LOCAL_PATH)
+ 
+ # Path to the intermediate location where the kernel build
+ # system creates the kernel module.
+-KBUILD_MODULE := $(KBUILD_OUT_DIR)/$(LOCAL_MODULE)
++# KBUILD_MODULE := $(KBUILD_OUT_DIR)/$(LOCAL_MODULE)
+ 
+ # Since we only invoke the kernel build system once per directory,
+ # each kernel module must depend on the same target.
+-- 
+2.5.0
+

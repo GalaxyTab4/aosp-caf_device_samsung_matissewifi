@@ -1,0 +1,39 @@
+From 410562171a606a8b3cb4df404acb63c1764b2b19 Mon Sep 17 00:00:00 2001
+From: Paul Beeler <pbeeler80@gmail.com>
+Date: Sat, 7 Mar 2015 01:22:51 -0700
+Subject: [PATCH] libtinycompress: use kernel headers when used as a shared lib
+
+---
+ core/binary.mk | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/core/binary.mk b/core/binary.mk
+index 53f0f70..699a132 100644
+--- a/core/binary.mk
++++ b/core/binary.mk
+@@ -137,6 +137,22 @@ ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
+   endif
+ endif
+ 
++# Have anything that builds with libtinycompress as a shared lib use kernel headers.
++
++ifdef LOCAL_SHARED_LIBRARIES
++  ifeq (1,$(words $(filter libtinycompress, $(LOCAL_SHARED_LIBRARIES))))
++    ifdef LOCAL_C_INCLUDES
++      LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
++    else
++      LOCAL_C_INCLUDES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
++    endif
++    ifdef LOCAL_ADDITIONAL_DEPENDENCIES
++      LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
++    else
++      LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
++    endif
++  endif
++endif
+ 
+ #end SaberMod
+ 
+--
+libgit2 0.23.4
+
