@@ -25,7 +25,6 @@ KERNEL_DIR := kernel
 .PHONY: $(PRODUCT_OUT)/kernel
 $(PRODUCT_OUT)/kernel: $(TARGET_PREBUILT_KERNEL)
 	cp $(TARGET_PREBUILT_KERNEL) $(PRODUCT_OUT)/kernel
-	cp device/samsung/matissewifi/prebuilt/dt.img $(PRODUCT_OUT)/dt.img
 
 include device/qcom/msm8226/AndroidBoard.mk
 
